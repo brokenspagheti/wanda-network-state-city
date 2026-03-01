@@ -3,114 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanda - Network State City | Complete Urban System</title>
+    <title>Wanda - Minecraft Network State City</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            background: #0a0e27;
+            font-family: 'Press Start 2P', cursive;
+            overflow-x: hidden;
+            background: #87CEEB;
         }
         #canvas-container {
             width: 100vw;
             height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
         #info-panel {
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(10, 14, 39, 0.95);
+            background: rgba(139, 69, 19, 0.95);
             color: #fff;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 15px;
+            border: 4px solid #654321;
             max-width: 320px;
-            border: 2px solid #00ffff;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+            image-rendering: pixelated;
         }
         h1 {
-            font-size: 24px;
+            font-size: 16px;
             margin-bottom: 10px;
-            color: #00ffff;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            color: #FFD700;
+            text-shadow: 2px 2px 0px #000;
         }
         .subtitle {
-            font-size: 12px;
-            color: #88ccff;
+            font-size: 8px;
+            color: #90EE90;
             margin-bottom: 15px;
         }
         .section {
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(0, 255, 255, 0.05);
-            border-radius: 5px;
+            margin: 12px 0;
+            padding: 8px;
+            background: rgba(101, 67, 33, 0.8);
+            border: 2px solid #8B4513;
         }
         .section-title {
             font-weight: bold;
-            color: #00ffff;
-            margin-bottom: 8px;
-            font-size: 14px;
+            color: #FFD700;
+            margin-bottom: 6px;
+            font-size: 10px;
         }
         .item {
-            margin: 6px 0;
-            padding: 6px;
-            background: rgba(0, 255, 255, 0.1);
-            border-left: 3px solid #00ffff;
-            border-radius: 3px;
-            font-size: 11px;
+            margin: 5px 0;
+            padding: 5px;
+            background: rgba(139, 69, 19, 0.6);
+            border-left: 3px solid #228B22;
+            font-size: 7px;
+            line-height: 1.4;
         }
         .item-name {
             font-weight: bold;
-            color: #00ffff;
+            color: #90EE90;
         }
         .item-desc {
-            font-size: 10px;
-            color: #aaddff;
+            font-size: 6px;
+            color: #DDD;
             margin-top: 2px;
         }
         #controls {
             position: absolute;
             bottom: 20px;
             left: 20px;
-            background: rgba(10, 14, 39, 0.95);
+            background: rgba(139, 69, 19, 0.95);
             color: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #00ffff;
-            font-size: 12px;
+            padding: 12px;
+            border: 4px solid #654321;
+            font-size: 8px;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
         }
         #layer-toggle {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(10, 14, 39, 0.95);
+            background: rgba(139, 69, 19, 0.95);
             color: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #00ffff;
+            padding: 12px;
+            border: 4px solid #654321;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
         }
         .toggle-btn {
             display: block;
-            margin: 8px 0;
-            padding: 8px 12px;
-            background: rgba(0, 255, 255, 0.2);
-            border: 1px solid #00ffff;
-            color: #00ffff;
+            margin: 6px 0;
+            padding: 8px 10px;
+            background: #8B4513;
+            border: 3px solid #654321;
+            color: #FFF;
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 11px;
-            transition: all 0.3s;
+            font-size: 8px;
+            font-family: 'Press Start 2P', cursive;
+            transition: all 0.1s;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
         }
         .toggle-btn:hover {
-            background: rgba(0, 255, 255, 0.4);
+            background: #A0522D;
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
         }
         .toggle-btn.active {
-            background: rgba(0, 255, 255, 0.6);
+            background: #228B22;
+            border-color: #006400;
+        }
+        #research-panel {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(139, 69, 19, 0.95);
+            color: #fff;
+            padding: 15px;
+            border: 4px solid #654321;
+            max-width: 350px;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+        }
+        .research-title {
+            font-size: 10px;
+            color: #FFD700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px #000;
+        }
+        .research-content {
+            font-size: 7px;
+            line-height: 1.5;
+            color: #DDD;
+            margin-bottom: 10px;
+        }
+        .upload-btn {
+            display: inline-block;
+            padding: 8px 12px;
+            background: #228B22;
+            border: 3px solid #006400;
+            color: #FFF;
+            cursor: pointer;
+            font-size: 8px;
+            font-family: 'Press Start 2P', cursive;
+            margin-top: 8px;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+        }
+        .upload-btn:hover {
+            background: #32CD32;
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+        }
+        #paper-input {
+            display: none;
+        }
+        .paper-link {
+            color: #87CEEB;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #654321;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B4513;
+            border: 2px solid #654321;
         }
     </style>
 </head>
@@ -118,123 +185,101 @@
     <div id="canvas-container"></div>
     
     <div id="info-panel">
-        <h1>🌐 WANDA</h1>
-        <div class="subtitle">Network State City - Barcelona Grid System</div>
+        <h1>⛏️ WANDA</h1>
+        <div class="subtitle">Minecraft Network State City</div>
         
         <div class="section">
-            <div class="section-title">🏗️ ARCHITECTURE</div>
+            <div class="section-title">🏗️ BLOCKS & BUILD</div>
             <div class="item">
-                <div class="item-name">Brutalist Sustainable Design</div>
-                <div class="item-desc">Concrete structures with green roofs & solar panels</div>
+                <div class="item-name">Stone Brick Buildings</div>
+                <div class="item-desc">Minecraft-style blocky architecture</div>
             </div>
             <div class="item">
-                <div class="item-name">Superblocks (Eixample Grid)</div>
-                <div class="item-desc">Barcelona-inspired 9x9 block system</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">🚇 TRANSPORTATION</div>
-            <div class="item">
-                <div class="item-name">Metro Lines (4 lines)</div>
-                <div class="item-desc">Underground rapid transit network</div>
+                <div class="item-name">Grass Block Roofs</div>
+                <div class="item-desc">Green sustainable tops</div>
             </div>
             <div class="item">
-                <div class="item-name">Tram System</div>
-                <div class="item-desc">Surface light rail on main avenues</div>
-            </div>
-            <div class="item">
-                <div class="item-name">Bike Lanes</div>
-                <div class="item-desc">Protected cycling infrastructure</div>
-            </div>
-            <div class="item">
-                <div class="item-name">Pedestrian Zones</div>
-                <div class="item-desc">Car-free superblock interiors</div>
+                <div class="item-name">Barcelona Grid</div>
+                <div class="item-desc">9x9 superblock layout</div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">💧 WATER SYSTEM</div>
+            <div class="section-title">🚇 TRANSPORT</div>
             <div class="item">
-                <div class="item-name">Canal Network</div>
-                <div class="item-desc">Waterways through city districts</div>
+                <div class="item-name">Minecart Rails (4 lines)</div>
+                <div class="item-desc">Underground rail network</div>
             </div>
             <div class="item">
-                <div class="item-name">Water Treatment Plants</div>
-                <div class="item-desc">Sustainable water recycling</div>
+                <div class="item-name">Powered Rails</div>
+                <div class="item-desc">Surface tram system</div>
             </div>
             <div class="item">
-                <div class="item-name">Rainwater Collection</div>
-                <div class="item-desc">Green infrastructure drainage</div>
+                <div class="item-name">Paths & Roads</div>
+                <div class="item-desc">Dirt path walkways</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">💧 WATER</div>
+            <div class="item">
+                <div class="item-name">Water Channels</div>
+                <div class="item-desc">Flowing water canals</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Cauldrons</div>
+                <div class="item-desc">Water collection points</div>
             </div>
         </div>
 
         <div class="section">
             <div class="section-title">🔧 UNDERGROUND</div>
             <div class="item">
-                <div class="item-name">Utility Tunnels</div>
-                <div class="item-desc">Power, water, data infrastructure</div>
+                <div class="item-name">Redstone Circuits</div>
+                <div class="item-desc">Power & data network</div>
             </div>
             <div class="item">
-                <div class="item-name">Parking Levels</div>
-                <div class="item-desc">Underground vehicle storage</div>
-            </div>
-            <div class="item">
-                <div class="item-name">Service Corridors</div>
-                <div class="item-desc">Maintenance access network</div>
+                <div class="item-name">Cave Systems</div>
+                <div class="item-desc">Utility tunnels</div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🌳 GREEN SPACES</div>
+            <div class="section-title">🌳 NATURE</div>
             <div class="item">
-                <div class="item-name">Central Park</div>
-                <div class="item-desc">Large urban green lung</div>
+                <div class="item-name">Oak Trees</div>
+                <div class="item-desc">Natural vegetation</div>
             </div>
             <div class="item">
-                <div class="item-name">Pocket Parks</div>
-                <div class="item-desc">Small parks in each superblock</div>
-            </div>
-            <div class="item">
-                <div class="item-name">Green Roofs</div>
-                <div class="item-desc">Vegetation on all buildings</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">🏛️ DISTRICTS</div>
-            <div class="item">
-                <div class="item-name">Governance Quarter</div>
-                <div class="item-desc">DAO operations center</div>
-            </div>
-            <div class="item">
-                <div class="item-name">Innovation Hub</div>
-                <div class="item-desc">Tech & startup zone</div>
-            </div>
-            <div class="item">
-                <div class="item-name">Residential Superblocks</div>
-                <div class="item-desc">Mixed-use living areas</div>
-            </div>
-            <div class="item">
-                <div class="item-name">Cultural District</div>
-                <div class="item-desc">Arts & community spaces</div>
+                <div class="item-name">Grass Blocks</div>
+                <div class="item-desc">Park areas</div>
             </div>
         </div>
     </div>
 
     <div id="layer-toggle">
-        <div style="font-weight: bold; margin-bottom: 10px; color: #00ffff;">VIEW LAYERS</div>
-        <button class="toggle-btn active" onclick="toggleLayer('surface')">🏙️ Surface</button>
-        <button class="toggle-btn active" onclick="toggleLayer('transport')">🚇 Transport</button>
-        <button class="toggle-btn active" onclick="toggleLayer('water')">💧 Water</button>
-        <button class="toggle-btn active" onclick="toggleLayer('underground')">🔧 Underground</button>
+        <div style="font-weight: bold; margin-bottom: 8px; color: #FFD700; font-size: 9px;">LAYERS</div>
+        <button class="toggle-btn active" id="btn-surface">🏙️ Surface</button>
+        <button class="toggle-btn active" id="btn-transport">🚇 Transport</button>
+        <button class="toggle-btn active" id="btn-water">💧 Water</button>
+        <button class="toggle-btn active" id="btn-underground">🔧 Underground</button>
     </div>
 
     <div id="controls">
-        <strong>Controls:</strong><br>
-        🖱️ Drag to rotate<br>
-        🔍 Scroll to zoom<br>
-        👆 Click layers to toggle views
+        <strong>CONTROLS:</strong><br>
+        🖱️ Drag = Rotate<br>
+        🔍 Scroll = Zoom<br>
+        👆 Click Layers
+    </div>
+
+    <div id="research-panel">
+        <div class="research-title">📄 RESEARCH PAPER</div>
+        <div class="research-content" id="paper-content">
+            Upload your Network State research paper to display it here. The paper will be integrated into the Wanda city visualization.
+        </div>
+        <label for="paper-input" class="upload-btn">📤 UPLOAD PAPER</label>
+        <input type="file" id="paper-input" accept=".pdf,.txt,.md">
+        <div id="paper-display" style="margin-top: 10px; font-size: 7px; color: #90EE90;"></div>
     </div>
 
     <script type="importmap">
@@ -246,5 +291,57 @@
         }
     </script>
     <script type="module" src="script.js"></script>
+    <script>
+        // Paper upload handler
+        document.getElementById('paper-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const content = event.target.result;
+                    document.getElementById('paper-content').innerHTML = 
+                        `<strong>Paper: ${file.name}</strong><br><br>` +
+                        content.substring(0, 500) + '...<br><br>' +
+                        '<span class="paper-link" onclick="showFullPaper()">Read Full Paper →</span>';
+                    
+                    // Store full content
+                    window.paperContent = content;
+                    window.paperName = file.name;
+                    
+                    document.getElementById('paper-display').textContent = 
+                        `✓ Loaded: ${file.name}`;
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function showFullPaper() {
+            if (window.paperContent) {
+                const win = window.open('', '_blank');
+                win.document.write(`
+                    <html>
+                    <head>
+                        <title>${window.paperName}</title>
+                        <style>
+                            body { 
+                                font-family: Georgia, serif; 
+                                max-width: 800px; 
+                                margin: 40px auto; 
+                                padding: 20px;
+                                line-height: 1.6;
+                            }
+                            h1 { color: #333; }
+                            pre { white-space: pre-wrap; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${window.paperName}</h1>
+                        <pre>${window.paperContent}</pre>
+                    </body>
+                    </html>
+                `);
+            }
+        }
+    </script>
 </body>
 </html>
