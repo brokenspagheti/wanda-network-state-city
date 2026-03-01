@@ -12,7 +12,27 @@ A fully interactive **Minecraft-style** 3D visualization of Wanda, a network sta
 **🌐 Visit the Live 3D City:**  
 ### **https://brokenspagheti.github.io/wanda-network-state-city/**
 
-> **Note:** If you see this README instead of the 3D city, wait 1-2 minutes for GitHub Pages to rebuild, then refresh your browser (Ctrl+Shift+R or Cmd+Shift+R).
+---
+
+## ⚠️ QUICK FIX NEEDED - Deploy Full Research Paper
+
+**Current Issue:** The live site has an abbreviated research paper. The full version is in `index-updated.html`.
+
+**30-Second Fix:**
+```bash
+git clone https://github.com/brokenspagheti/wanda-network-state-city.git
+cd wanda-network-state-city
+cp index-updated.html index.html
+git add index.html
+git commit -m "Deploy full research paper"
+git push
+```
+
+**Or via GitHub Web:**
+1. Open [index-updated.html](https://github.com/brokenspagheti/wanda-network-state-city/blob/main/index-updated.html)
+2. Click "Raw" → Copy all content
+3. Open [index.html](https://github.com/brokenspagheti/wanda-network-state-city/blob/main/index.html) → Edit
+4. Replace all content → Commit
 
 ---
 
@@ -21,20 +41,25 @@ A fully interactive **Minecraft-style** 3D visualization of Wanda, a network sta
 ### **"The Network State: A New Model of Governance in the Digital Age"**
 *by Nikhil | Department of Computer Science and Engineering*
 
-This project uniquely combines **visual city planning** with **academic research** on network states. Click the **"📄 READ RESEARCH PAPER"** button in the live demo to access the full research paper, which explores:
+**Full Research Paper:** https://brokenspagheti.github.io/network-state-research/
+
+This project uniquely combines **visual city planning** with **academic research** on network states. The research paper explores:
 
 - **Digital Governance Models** - How network states challenge traditional nation-states
-- **Blockchain & DAOs** - Decentralized coordination mechanisms
+- **Blockchain & DAOs** - Decentralized coordination mechanisms (MakerDAO, Aragon)
 - **Cryptographic Identity** - Trust systems without centralized authority
 - **Case Studies** - Real-world examples like Estonia's e-Residency
 - **Future Implications** - Impact on citizenship, governance, and global politics
 
-The research paper is fully integrated into the website with a beautiful modal reader featuring:
-- ✅ Full academic content with proper formatting
-- ✅ Sections: Abstract, Introduction, Literature Review, Methodology, Advantages/Challenges, Case Examples, Conclusion
-- ✅ References to Balaji Srinivasan, Satoshi Nakamoto, Vitalik Buterin
-- ✅ Minecraft-themed UI design
-- ✅ Smooth reading experience
+### Research Paper Sections:
+1. **Abstract** - Overview and keywords
+2. **Introduction** - Context and significance  
+3. **Literature Review** - Digital communities, blockchain, DAOs
+4. **Methodology** - Research approach and core principles
+5. **Advantages & Challenges** - Critical analysis
+6. **Case Examples** - Estonia, MakerDAO, Aragon
+7. **Conclusion** - Future implications
+8. **References** - Balaji Srinivasan, Satoshi Nakamoto, Vitalik Buterin
 
 ---
 
@@ -167,35 +192,9 @@ Click buttons to show/hide infrastructure layers:
 - **Redstone Red** - #FF0000 (power grid)
 - **Gold** - #FFD700 (UI accents)
 
-### UI Design
-- **Wooden Panels** - Brown UI backgrounds (#8B4513)
-- **Pixel Borders** - 4px solid borders
-- **Shadow Effects** - 8px offset shadows
-- **Active States** - Green highlight (#228B22)
-
----
-
-## 🛠️ Technical Implementation
-
-### Three.js Features
-- **BoxGeometry** - All blocks are perfect cubes
-- **CanvasTexture** - Procedural texture generation
-- **NearestFilter** - Pixelated texture rendering
-- **Group Hierarchy** - Organized layer system
-- **Shadow Mapping** - Soft shadows (2048x2048)
-- **OrbitControls** - Smooth camera interaction
-
-### Performance Optimizations
-- **Efficient Rendering** - Grouped objects by layer
-- **Layer Culling** - Toggle visibility to reduce draw calls
-- **Fog Distance** - Render optimization (50-200 units)
-- **Shared Materials** - Reused textures across blocks
-
 ---
 
 ## 📦 Local Development
-
-If you want to run the project locally:
 
 ```bash
 # Clone repository
@@ -216,32 +215,13 @@ open http://localhost:8000
 ### File Structure
 ```
 wanda-network-state-city/
-├── index.html          # Main HTML with UI and research modal
-├── script.js           # Three.js 3D city generation
-├── .nojekyll          # GitHub Pages configuration
-└── README.md          # This file
+├── index.html              # Current (abbreviated research)
+├── index-updated.html      # Full research paper version ⭐
+├── script.js               # Three.js 3D city generation
+├── .nojekyll              # GitHub Pages configuration
+├── DEPLOY_FULL_RESEARCH.md # Deployment instructions
+└── README.md              # This file
 ```
-
----
-
-## 🎯 Network State Concept
-
-### Digital Governance Visualization
-Wanda represents the physical manifestation of network state principles:
-
-1. **Decentralized Layout** - No single center, distributed governance
-2. **Connected Districts** - Rail network integration (like digital networks)
-3. **Sustainable Design** - Green roofs, water management
-4. **Community Blocks** - Superblock organization (like DAOs)
-5. **Voluntary Participation** - Open, accessible city design
-
-### Research Integration
-The integrated research paper provides theoretical foundation for the city's design:
-
-- **Why network states?** - Addresses governance inefficiency
-- **How they work** - Blockchain, cryptography, DAOs
-- **Real examples** - Estonia, MakerDAO, Aragon
-- **Future vision** - Redefined citizenship, global governance
 
 ---
 
@@ -296,7 +276,8 @@ MIT License - Build, modify, share freely!
 
 ## 📧 Links
 
-- **🌐 Live Demo:** https://brokenspagheti.github.io/wanda-network-state-city/
+- **🌐 Live 3D City:** https://brokenspagheti.github.io/wanda-network-state-city/
+- **📄 Full Research Paper:** https://brokenspagheti.github.io/network-state-research/
 - **📂 Repository:** https://github.com/brokenspagheti/wanda-network-state-city
 - **🐛 Issues:** [Report bugs or request features](https://github.com/brokenspagheti/wanda-network-state-city/issues)
 
