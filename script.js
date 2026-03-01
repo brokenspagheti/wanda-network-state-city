@@ -53,11 +53,13 @@ function init() {
     // Add all layers to scene
     Object.values(layers).forEach(layer => scene.add(layer));
 
-    // Build Minecraft city
+    // Build Minecraft city with comprehensive infrastructure
     createGround();
     createMinecraftCity();
     createTransportation();
     createWaterSystem();
+    createUtilities();
+    createSocialInfrastructure();
     createUnderground();
     createTrees();
     createClouds();
@@ -117,61 +119,65 @@ function createMinecraftTextures() {
     textures.dirt.magFilter = THREE.NearestFilter;
     textures.dirt.minFilter = THREE.NearestFilter;
 
-    // Oak Planks texture
-    const plankCanvas = document.createElement('canvas');
-    plankCanvas.width = 16;
-    plankCanvas.height = 16;
-    const pCtx = plankCanvas.getContext('2d');
-    pCtx.fillStyle = '#9c7f4a';
-    pCtx.fillRect(0, 0, 16, 16);
-    for (let i = 0; i < 16; i += 4) {
-        pCtx.fillStyle = '#8c6f3a';
-        pCtx.fillRect(i, 0, 1, 16);
-    }
-    textures.planks = new THREE.CanvasTexture(plankCanvas);
-    textures.planks.magFilter = THREE.NearestFilter;
-    textures.planks.minFilter = THREE.NearestFilter;
-
     // Glass texture
     const glassCanvas = document.createElement('canvas');
     glassCanvas.width = 16;
     glassCanvas.height = 16;
     const glCtx = glassCanvas.getContext('2d');
-    glCtx.fillStyle = 'rgba(200, 230, 255, 0.3)';
+    glCtx.fillStyle = '#E0F0FF';
     glCtx.fillRect(0, 0, 16, 16);
+    for (let i = 0; i < 10; i++) {
+        glCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+        glCtx.fillRect(Math.random() * 16, Math.random() * 16, 2, 2);
+    }
     textures.glass = new THREE.CanvasTexture(glassCanvas);
     textures.glass.magFilter = THREE.NearestFilter;
     textures.glass.minFilter = THREE.NearestFilter;
+
+    // Oak Plank texture
+    const plankCanvas = document.createElement('canvas');
+    plankCanvas.width = 16;
+    plankCanvas.height = 16;
+    const pCtx = plankCanvas.getContext('2d');
+    pCtx.fillStyle = '#9C7A3C';
+    pCtx.fillRect(0, 0, 16, 16);
+    for (let i = 0; i < 16; i++) {
+        pCtx.fillStyle = '#8C6A2C';
+        pCtx.fillRect(0, i, 16, 1);
+    }
+    textures.oakPlank = new THREE.CanvasTexture(plankCanvas);
+    textures.oakPlank.magFilter = THREE.NearestFilter;
+    textures.oakPlank.minFilter = THREE.NearestFilter;
 }
 
 function createGround() {
-    // Grass ground
-    const groundSize = 200;
-    const groundGeo = new THREE.PlaneGeometry(groundSize, groundSize);
+    const groundGeo = new THREE.PlaneGeometry(300, 300);
     const groundMat = new THREE.MeshStandardMaterial({
-        map: textures.grass,
-        side: THREE.DoubleSide
+        map: textures.grass
     });
     textures.grass.wrapS = THREE.RepeatWrapping;
     textures.grass.wrapT = THREE.RepeatWrapping;
-    textures.grass.repeat.set(groundSize / 4, groundSize / 4);
-    
+    textures.grass.repeat.set(50, 50);
+
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
     layers.surface.add(ground);
 
     // Bedrock layer (bottom)
-    const bedrockGeo = new THREE.BoxGeometry(groundSize, 1, groundSize);
-    const bedrockMat = new THREE.MeshStandardMaterial({ color: 0x333333 });
-    const bedrock = new THREE.Mesh(bedrockGeo, bedrockMat);
+    const bedrockMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a });
+    const bedrock = new THREE.Mesh(
+        new THREE.PlaneGeometry(300, 300),
+        bedrockMat
+    );
+    bedrock.rotation.x = -Math.PI / 2;
     bedrock.position.y = -15;
     layers.underground.add(bedrock);
 }
 
 function createMinecraftBlock(x, y, z, size, material) {
-    const geo = new THREE.BoxGeometry(size, size, size);
-    const mesh = new THREE.Mesh(geo, material);
+    const geometry = new THREE.BoxGeometry(size, size, size);
+    const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y, z);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
@@ -179,17 +185,14 @@ function createMinecraftBlock(x, y, z, size, material) {
 }
 
 function createMinecraftBuilding(x, z, width, height, depth) {
+    const blockSize = 1;
     const group = new THREE.Group();
     
-    // Stone brick material
     const stoneMat = new THREE.MeshStandardMaterial({
         map: textures.stoneBrick
     });
     
-    // Build block by block (Minecraft style)
-    const blockSize = 1;
-    
-    // Walls
+    // Build walls block by block
     for (let h = 0; h < height; h++) {
         // Front and back walls
         for (let w = 0; w < width; w++) {
@@ -308,7 +311,7 @@ function createMinecraftCity() {
                 createMinecraftBuilding(bx, bz, width, height, depth);
             }
 
-            // Grass patches in block centers
+            // Grass patches in block centers (green spaces)
             if (Math.random() > 0.5) {
                 const grassMat = new THREE.MeshStandardMaterial({
                     map: textures.grass
@@ -319,7 +322,7 @@ function createMinecraftCity() {
         }
     }
 
-    // Dirt path streets
+    // Dirt path streets (roads)
     createStreets(gridSize, blockSize, streetWidth);
 }
 
@@ -359,11 +362,11 @@ function createStreets(gridSize, blockSize, streetWidth) {
 }
 
 function createTransportation() {
-    // Minecart rails (underground)
+    // METRO: Minecart rails (underground)
     const railMat = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
     const ironMat = new THREE.MeshStandardMaterial({ color: 0xC0C0C0 });
     
-    // 4 rail lines
+    // 4 metro rail lines
     const railRoutes = [
         [{x: -80, z: 0}, {x: 80, z: 0}],
         [{x: 0, z: -80}, {x: 0, z: 80}],
@@ -393,24 +396,39 @@ function createTransportation() {
         }
     });
 
-    // Powered rails on surface (tram)
+    // RAILWAYS: Powered rails on surface (tram/train)
     for (let i = -80; i <= 80; i += 2) {
         const rail1 = createMinecraftBlock(i, 0.2, 20, 0.5, ironMat);
         const rail2 = createMinecraftBlock(i, 0.2, -20, 0.5, ironMat);
         layers.transport.add(rail1);
         layers.transport.add(rail2);
     }
+
+    // TERMINALS: Transit stations
+    const stationMat = new THREE.MeshStandardMaterial({ color: 0xFFD700 });
+    const terminalLocations = [
+        {x: -60, z: 0}, {x: 60, z: 0},
+        {x: 0, z: -60}, {x: 0, z: 60}
+    ];
+    
+    terminalLocations.forEach(loc => {
+        // Station building
+        for (let h = 0; h < 3; h++) {
+            const station = createMinecraftBlock(loc.x, h + 0.5, loc.z, 4, stationMat);
+            layers.transport.add(station);
+        }
+    });
 }
 
 function createWaterSystem() {
-    // Water blocks (Minecraft style)
+    // WATER SUPPLY: Water blocks (Minecraft style)
     const waterMat = new THREE.MeshStandardMaterial({
         color: 0x3F76E4,
         transparent: true,
         opacity: 0.7
     });
 
-    // Horizontal canal
+    // WATERWAYS: Horizontal canal
     for (let x = -80; x <= 80; x += 2) {
         for (let z = 28; z <= 32; z += 2) {
             const water = createMinecraftBlock(x, -0.5, z, 2, waterMat);
@@ -418,7 +436,7 @@ function createWaterSystem() {
         }
     }
 
-    // Vertical canal
+    // WATERWAYS: Vertical canal
     for (let z = -80; z <= 80; z += 2) {
         for (let x = -32; x <= -28; x += 2) {
             const water = createMinecraftBlock(x, -0.5, z, 2, waterMat);
@@ -426,18 +444,186 @@ function createWaterSystem() {
         }
     }
 
-    // Cauldrons (water collection)
+    // HARVESTING: Cauldrons (rainwater collection)
     const cauldronMat = new THREE.MeshStandardMaterial({ color: 0x4A4A4A });
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 15; i++) {
         const x = (Math.random() - 0.5) * 140;
         const z = (Math.random() - 0.5) * 140;
         const cauldron = createMinecraftBlock(x, 0.5, z, 1, cauldronMat);
         layers.water.add(cauldron);
     }
+
+    // TREATMENT: Water treatment plants
+    const treatmentMat = new THREE.MeshStandardMaterial({ color: 0x4169E1 });
+    const treatmentLocations = [{x: -70, z: 30}, {x: 70, z: -30}];
+    
+    treatmentLocations.forEach(loc => {
+        for (let w = 0; w < 5; w++) {
+            for (let d = 0; d < 5; d++) {
+                for (let h = 0; h < 4; h++) {
+                    const block = createMinecraftBlock(
+                        loc.x + w - 2,
+                        h + 0.5,
+                        loc.z + d - 2,
+                        1,
+                        treatmentMat
+                    );
+                    layers.water.add(block);
+                }
+            }
+        }
+    });
+
+    // DRAINAGE: Underground drainage pipes
+    const drainMat = new THREE.MeshStandardMaterial({ color: 0x696969 });
+    for (let x = -80; x <= 80; x += 15) {
+        for (let z = -80; z <= 80; z += 15) {
+            const drain = createMinecraftBlock(x, -2, z, 0.5, drainMat);
+            layers.water.add(drain);
+        }
+    }
+}
+
+function createUtilities() {
+    // ELECTRICITY: Power grid (glowing yellow lines)
+    const electricMat = new THREE.MeshStandardMaterial({
+        color: 0xFFFF00,
+        emissive: 0xFFFF00,
+        emissiveIntensity: 0.5
+    });
+
+    // Power lines grid
+    for (let x = -80; x <= 80; x += 20) {
+        for (let z = -80; z <= 80; z += 20) {
+            const powerNode = createMinecraftBlock(x, 15, z, 0.3, electricMat);
+            layers.underground.add(powerNode);
+        }
+    }
+
+    // Power poles
+    const poleMat = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
+    for (let i = -80; i <= 80; i += 25) {
+        for (let j = -80; j <= 80; j += 25) {
+            for (let h = 0; h < 15; h++) {
+                const pole = createMinecraftBlock(i, h + 0.5, j, 0.4, poleMat);
+                layers.surface.add(pole);
+            }
+        }
+    }
+
+    // TELECOM: Communication towers
+    const telecomMat = new THREE.MeshStandardMaterial({ color: 0xFF6347 });
+    const towerLocations = [
+        {x: -50, z: -50}, {x: 50, z: 50},
+        {x: -50, z: 50}, {x: 50, z: -50}
+    ];
+    
+    towerLocations.forEach(loc => {
+        // Tall tower
+        for (let h = 0; h < 25; h++) {
+            const tower = createMinecraftBlock(loc.x, h + 0.5, loc.z, 0.8, telecomMat);
+            layers.surface.add(tower);
+        }
+        // Antenna top
+        const antenna = createMinecraftBlock(loc.x, 26, loc.z, 1.5, telecomMat);
+        layers.surface.add(antenna);
+    });
+
+    // GAS PIPELINES: Underground gas network
+    const gasMat = new THREE.MeshStandardMaterial({ color: 0xFFA500 });
+    
+    // Gas pipeline grid
+    for (let x = -80; x <= 80; x += 12) {
+        for (let z = -80; z <= 80; z += 12) {
+            const pipe = createMinecraftBlock(x, -5, z, 0.4, gasMat);
+            layers.underground.add(pipe);
+        }
+    }
+}
+
+function createSocialInfrastructure() {
+    // HEALTH: Hospitals (red cross buildings)
+    const hospitalMat = new THREE.MeshStandardMaterial({ color: 0xFF0000 });
+    const hospitalLocations = [{x: -40, z: -40}, {x: 40, z: 40}];
+    
+    hospitalLocations.forEach(loc => {
+        // Hospital building
+        for (let w = 0; w < 8; w++) {
+            for (let d = 0; d < 8; d++) {
+                for (let h = 0; h < 10; h++) {
+                    if (w === 0 || w === 7 || d === 0 || d === 7 || h === 9) {
+                        const block = createMinecraftBlock(
+                            loc.x + w - 4,
+                            h + 0.5,
+                            loc.z + d - 4,
+                            1,
+                            hospitalMat
+                        );
+                        layers.surface.add(block);
+                    }
+                }
+            }
+        }
+        // Red cross on top
+        const cross = createMinecraftBlock(loc.x, 11, loc.z, 3, hospitalMat);
+        layers.surface.add(cross);
+    });
+
+    // EDUCATION: Schools (blue buildings)
+    const schoolMat = new THREE.MeshStandardMaterial({ color: 0x4169E1 });
+    const schoolLocations = [
+        {x: -50, z: 0}, {x: 50, z: 0},
+        {x: 0, z: -50}, {x: 0, z: 50}
+    ];
+    
+    schoolLocations.forEach(loc => {
+        for (let w = 0; w < 6; w++) {
+            for (let d = 0; d < 6; d++) {
+                for (let h = 0; h < 6; h++) {
+                    if (w === 0 || w === 5 || d === 0 || d === 5 || h === 5) {
+                        const block = createMinecraftBlock(
+                            loc.x + w - 3,
+                            h + 0.5,
+                            loc.z + d - 3,
+                            1,
+                            schoolMat
+                        );
+                        layers.surface.add(block);
+                    }
+                }
+            }
+        }
+    });
+
+    // SECURITY: Police/Fire stations (dark blue)
+    const securityMat = new THREE.MeshStandardMaterial({ color: 0x000080 });
+    const securityLocations = [{x: -30, z: 30}, {x: 30, z: -30}];
+    
+    securityLocations.forEach(loc => {
+        for (let w = 0; w < 5; w++) {
+            for (let d = 0; d < 5; d++) {
+                for (let h = 0; h < 5; h++) {
+                    if (w === 0 || w === 4 || d === 0 || d === 4 || h === 4) {
+                        const block = createMinecraftBlock(
+                            loc.x + w - 2,
+                            h + 0.5,
+                            loc.z + d - 2,
+                            1,
+                            securityMat
+                        );
+                        layers.surface.add(block);
+                    }
+                }
+            }
+        }
+    });
+
+    // HOUSING: Residential complexes (already created in createMinecraftCity)
+    // The random buildings serve as housing units
 }
 
 function createUnderground() {
-    // Redstone circuits (power network)
+    // REDSTONE CIRCUITS: Power network (electricity distribution)
     const redstoneMat = new THREE.MeshStandardMaterial({
         color: 0xFF0000,
         emissive: 0xFF0000,
@@ -452,7 +638,7 @@ function createUnderground() {
         }
     }
 
-    // Cave tunnels (stone)
+    // CAVE TUNNELS: Utility corridors (sanitation, cables)
     const stoneMat = new THREE.MeshStandardMaterial({ color: 0x808080 });
     
     for (let i = -4; i <= 4; i++) {
@@ -471,7 +657,7 @@ function createUnderground() {
 }
 
 function createTrees() {
-    // Oak trees (Minecraft style)
+    // Oak trees (Minecraft style) - GREEN SPACES
     const logMat = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
     const leavesMat = new THREE.MeshStandardMaterial({ color: 0x228B22 });
 
