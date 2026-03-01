@@ -1,14 +1,35 @@
 # ⛏️ Wanda - Minecraft Network State City
 
-A fully interactive **Minecraft-style** 3D visualization of Wanda, a network state city inspired by Barcelona's urban planning. Built with Three.js, featuring blocky voxel architecture, complete infrastructure systems, and integrated research paper display.
+A fully interactive **Minecraft-style** 3D visualization of Wanda, a network state city inspired by Barcelona's urban planning. Built with Three.js, featuring blocky voxel architecture, complete infrastructure systems, and **integrated academic research paper** on Network State governance.
 
 ![Minecraft](https://img.shields.io/badge/Style-Minecraft-green)
 ![Three.js](https://img.shields.io/badge/Three.js-0.160.0-blue)
+![Research](https://img.shields.io/badge/Research-Integrated-yellow)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ## 🎮 Live Demo
 
-**⛏️ Play Now:** https://brokenspagheti.github.io/wanda-network-state-city/
+**⛏️ Explore Now:** https://brokenspagheti.github.io/wanda-network-state-city/
+
+## 📄 Research Paper Integration
+
+### **"The Network State: A New Model of Governance in the Digital Age"**
+*by Nikhil | Department of Computer Science and Engineering*
+
+This project uniquely combines **visual city planning** with **academic research** on network states. Click the **"📄 READ RESEARCH PAPER"** button in the live demo to access the full research paper, which explores:
+
+- **Digital Governance Models** - How network states challenge traditional nation-states
+- **Blockchain & DAOs** - Decentralized coordination mechanisms
+- **Cryptographic Identity** - Trust systems without centralized authority
+- **Case Studies** - Real-world examples like Estonia's e-Residency
+- **Future Implications** - Impact on citizenship, governance, and global politics
+
+The research paper is fully integrated into the website with a beautiful modal reader featuring:
+- ✅ Full academic content with proper formatting
+- ✅ Sections: Abstract, Introduction, Literature Review, Methodology, Advantages/Challenges, Case Examples, Conclusion
+- ✅ References to Balaji Srinivasan, Satoshi Nakamoto, Vitalik Buterin
+- ✅ Minecraft-themed UI design
+- ✅ Smooth reading experience
 
 ## 🧱 Minecraft Architecture
 
@@ -20,7 +41,7 @@ A fully interactive **Minecraft-style** 3D visualization of Wanda, a network sta
 - **Voxel-Perfect** - True blocky Minecraft aesthetic
 
 ### Procedural Textures
-- **Stone Bricks** - Randomized gray patterns
+- **Stone Bricks** - Randomized gray patterns (16x16 pixels)
 - **Grass Blocks** - Green with dirt variations
 - **Dirt Paths** - Brown street textures
 - **Oak Planks** - Wood grain patterns
@@ -32,13 +53,13 @@ A fully interactive **Minecraft-style** 3D visualization of Wanda, a network sta
 - **9x9 Superblocks** - Eixample-inspired layout
 - **Dirt Path Streets** - Minecraft path blocks
 - **Grass Patches** - Parks in block centers
-- **200+ Buildings** - Randomly generated heights
+- **200+ Buildings** - Randomly generated heights (5-13 blocks)
 - **Blocky Clouds** - Floating white blocks in sky
 
 ## 🚇 Transportation (Minecart System)
 
 ### Underground Rails
-- **4 Minecart Lines** - Red, Blue, Green, Yellow routes
+- **4 Minecart Lines** - Complete rail network
 - **Iron Rails** - Authentic rail block textures
 - **Wooden Ties** - Oak plank rail supports
 - **Underground Tunnels** - At Y=-4 level
@@ -51,7 +72,7 @@ A fully interactive **Minecraft-style** 3D visualization of Wanda, a network sta
 ## 💧 Water System
 
 ### Water Blocks
-- **Flowing Canals** - Minecraft water blocks
+- **Flowing Canals** - Minecraft water blocks (#3F76E4)
 - **Horizontal Canal** - Main east-west waterway
 - **Vertical Canal** - North-south water channel
 - **Cauldrons** - Water collection points (10 locations)
@@ -60,7 +81,7 @@ A fully interactive **Minecraft-style** 3D visualization of Wanda, a network sta
 ## 🔧 Underground Infrastructure
 
 ### Redstone Network
-- **Redstone Circuits** - Glowing red power grid
+- **Redstone Circuits** - Glowing red power grid (#FF0000)
 - **Power Distribution** - 10-block spacing grid
 - **Emissive Blocks** - Lit redstone texture
 
@@ -68,6 +89,7 @@ A fully interactive **Minecraft-style** 3D visualization of Wanda, a network sta
 - **Stone Tunnels** - Utility corridors at Y=-8
 - **Grid Layout** - 20-block spacing
 - **Service Access** - Throughout underground
+- **Bedrock Layer** - Bottom foundation at Y=-15
 
 ## 🌳 Nature & Environment
 
@@ -81,34 +103,26 @@ A fully interactive **Minecraft-style** 3D visualization of Wanda, a network sta
 - **Minecraft Sky Blue** (#87CEEB)
 - **Blocky Clouds** - White wool-style blocks
 - **Fog Effects** - Distance rendering
-- **Day Lighting** - Bright ambient + sun
-
-## 📄 Research Paper Integration
-
-### Upload Your Paper
-- **File Upload** - Support for PDF, TXT, MD formats
-- **Live Preview** - First 500 characters displayed
-- **Full View** - Opens in new window
-- **Network State Focus** - Integrated with city concept
-
-### How to Add Your Paper
-1. Click **"📤 UPLOAD PAPER"** button
-2. Select your research paper file
-3. Paper preview appears in panel
-4. Click **"Read Full Paper →"** to view complete document
+- **Day Lighting** - Bright ambient + directional sun
 
 ## 🎮 Interactive Controls
 
-### Layer Toggle System (FIXED!)
-Click buttons to show/hide layers:
+### Layer Toggle System (WORKING!)
+Click buttons to show/hide infrastructure layers:
 - **🏙️ Surface** - Buildings, trees, clouds, streets
 - **🚇 Transport** - Minecart rails, powered rails
 - **💧 Water** - Canals, water blocks, cauldrons
-- **🔧 Underground** - Redstone, caves, tunnels
+- **🔧 Underground** - Redstone, caves, tunnels, bedrock
+
+### Research Paper Access
+- **📄 READ RESEARCH PAPER** button - Opens full academic paper
+- **Modal Reader** - Beautiful reading interface
+- **Smooth Scrolling** - Easy navigation through sections
+- **Close Button** - Return to city visualization
 
 ### Camera Controls
 - **🖱️ Drag** - Rotate camera around city
-- **🔍 Scroll** - Zoom in/out
+- **🔍 Scroll** - Zoom in/out (20-200 units)
 - **Damping** - Smooth camera movement
 
 ## 🎨 Minecraft Aesthetic
@@ -118,6 +132,7 @@ Click buttons to show/hide layers:
 - **No Anti-aliasing** - Sharp blocky edges
 - **Nearest Filter** - Crisp pixel-perfect rendering
 - **Voxel Grid** - Everything aligned to 1-unit blocks
+- **Press Start 2P Font** - Retro pixel font for UI
 
 ### Color Palette
 - **Stone Gray** - #7a7a7a (buildings)
@@ -126,83 +141,73 @@ Click buttons to show/hide layers:
 - **Water Blue** - #3F76E4 (canals)
 - **Sky Blue** - #87CEEB (background)
 - **Redstone Red** - #FF0000 (power grid)
+- **Gold** - #FFD700 (UI accents)
 
 ### UI Design
-- **Press Start 2P Font** - Retro pixel font
-- **Wooden Panels** - Brown UI backgrounds
-- **Pixel Borders** - Blocky button styles
+- **Wooden Panels** - Brown UI backgrounds (#8B4513)
+- **Pixel Borders** - 4px solid borders
 - **Shadow Effects** - 8px offset shadows
+- **Active States** - Green highlight (#228B22)
 
 ## 🛠️ Technical Implementation
 
 ### Three.js Features
-- **BoxGeometry** - All blocks are cubes
+- **BoxGeometry** - All blocks are perfect cubes
 - **CanvasTexture** - Procedural texture generation
 - **NearestFilter** - Pixelated texture rendering
 - **Group Hierarchy** - Organized layer system
-- **Shadow Mapping** - Soft shadows enabled
+- **Shadow Mapping** - Soft shadows (2048x2048)
+- **OrbitControls** - Smooth camera interaction
 
-### Performance
-- **Efficient Rendering** - Grouped objects
-- **Layer Culling** - Toggle visibility
-- **Fog Distance** - Render optimization
-- **Shadow Maps** - 2048x2048 resolution
+### Performance Optimizations
+- **Efficient Rendering** - Grouped objects by layer
+- **Layer Culling** - Toggle visibility to reduce draw calls
+- **Fog Distance** - Render optimization (50-200 units)
+- **Shared Materials** - Reused textures across blocks
 
-## 📦 Installation
+## 📦 Installation & Setup
 
 ```bash
 # Clone repository
 git clone https://github.com/brokenspagheti/wanda-network-state-city.git
 cd wanda-network-state-city
 
-# Serve locally
+# Serve locally (choose one)
 python -m http.server 8000
 # or
 npx serve
+# or
+php -S localhost:8000
 
 # Open browser
 open http://localhost:8000
 ```
 
+### File Structure
+```
+wanda-network-state-city/
+├── index.html          # UI, layers, research paper modal
+├── script.js           # 3D Minecraft city generation
+└── README.md          # Documentation
+```
+
 ## 🎯 Network State Concept
 
-### Digital Governance
-- **Decentralized Layout** - No single center
-- **Connected Districts** - Rail network integration
-- **Sustainable Design** - Green roofs, water management
-- **Community Blocks** - Superblock organization
+### Digital Governance Visualization
+Wanda represents the **physical manifestation** of network state principles:
+
+1. **Decentralized Layout** - No single center, distributed governance
+2. **Connected Districts** - Rail network integration (like digital networks)
+3. **Sustainable Design** - Green roofs, water management
+4. **Community Blocks** - Superblock organization (like DAOs)
+5. **Voluntary Participation** - Open, accessible city design
 
 ### Research Integration
-- Upload your network state research
-- Visual representation of concepts
-- Interactive exploration
-- Educational tool
-
-## 🚀 Future Features
-
-- [ ] Animated minecarts on rails
-- [ ] Day/night cycle
-- [ ] Villager NPCs
-- [ ] Mob spawning
-- [ ] Block breaking/placing
-- [ ] Inventory system
-- [ ] Multiplayer support
-- [ ] VR mode
-
-## 🤝 Contributing
-
-Want to add features? Ideas:
-1. **More block types** - Add new Minecraft blocks
-2. **Biomes** - Different terrain types
-3. **Structures** - Villages, temples, etc.
-4. **Mobs** - Animated creatures
-5. **Sounds** - Minecraft audio effects
-
-```bash
-git checkout -b feature/new-blocks
-git commit -m 'Add new block types'
-git push origin feature/new-blocks
-```
+The integrated research paper provides **theoretical foundation** for the city's design:
+- **Why network states?** - Addresses governance inefficiency
+- **How they work** - Blockchain, cryptography, DAOs
+- **Real examples** - Estonia, MakerDAO, Aragon
+- **Future vision** - Redefined citizenship, global governance
 
 ## 📊 City Statistics
 
@@ -214,20 +219,94 @@ git push origin feature/new-blocks
 - **Redstone:** 200+ powered blocks
 - **Clouds:** 20 cloud formations
 - **Total Area:** 200x200 blocks
+- **Height Range:** Y=-15 (bedrock) to Y=60 (clouds)
 
 ## 🎮 Minecraft Features
 
 ### Authentic Elements
 - ✅ Block-by-block construction
-- ✅ Procedural textures
-- ✅ Minecart rails
+- ✅ Procedural 16x16 textures
+- ✅ Minecart rails & powered rails
 - ✅ Water physics (visual)
-- ✅ Redstone circuits
-- ✅ Oak trees
+- ✅ Redstone circuits (glowing)
+- ✅ Oak trees (logs + leaves)
 - ✅ Grass blocks
 - ✅ Stone bricks
 - ✅ Glass windows
 - ✅ Cauldrons
+- ✅ Bedrock layer
+- ✅ Blocky clouds
+
+## 🚀 Future Enhancements
+
+### City Features
+- [ ] Animated minecarts on rails
+- [ ] Day/night cycle
+- [ ] Villager NPCs
+- [ ] Mob spawning
+- [ ] Block breaking/placing
+- [ ] Inventory system
+- [ ] Multiplayer support
+- [ ] VR mode
+
+### Research Features
+- [ ] Interactive paper annotations
+- [ ] Citation links
+- [ ] Related papers section
+- [ ] Download PDF option
+- [ ] Share on social media
+
+## 🤝 Contributing
+
+Want to add features? Ideas:
+
+### City Improvements
+1. **More block types** - Add new Minecraft blocks (cobblestone, bricks, etc.)
+2. **Biomes** - Different terrain types (desert, snow, forest)
+3. **Structures** - Villages, temples, monuments
+4. **Mobs** - Animated creatures
+5. **Sounds** - Minecraft audio effects
+
+### Research Improvements
+1. **More papers** - Add related research
+2. **Interactive diagrams** - Visual explanations
+3. **Video presentations** - Embedded talks
+4. **Discussion forum** - Community feedback
+
+```bash
+git checkout -b feature/new-feature
+git commit -m 'Add amazing feature'
+git push origin feature/new-feature
+```
+
+## 📄 Research Paper Details
+
+### Full Title
+**"The Network State: A New Model of Governance in the Digital Age"**
+
+### Author
+Nikhil | Department of Computer Science and Engineering
+
+### Sections
+1. **Abstract** - Overview and keywords
+2. **Introduction** - Context and significance
+3. **Literature Review** - Digital communities, blockchain, DAOs
+4. **Methodology** - Research approach and core principles
+5. **Advantages & Challenges** - Critical analysis
+6. **Case Examples** - Real-world implementations
+7. **Conclusion** - Future implications
+8. **References** - Academic citations
+
+### Key Topics
+- Network State definition (Balaji Srinivasan)
+- Digital-first formation
+- Voluntary membership
+- Cryptographic identity
+- Decentralized governance
+- Economic coordination
+- DAOs (MakerDAO, Aragon)
+- Estonia's e-Residency
+- Sustainable Development Goals
 
 ## 📄 License
 
@@ -235,20 +314,24 @@ MIT License - Build, modify, share freely!
 
 ## 🙏 Credits
 
-- **Minecraft** - Mojang Studios (inspiration)
+- **Minecraft** - Mojang Studios (visual inspiration)
 - **Three.js** - 3D graphics library
-- **Barcelona** - Urban planning model
-- **Network State** - Governance concept
-- **Press Start 2P** - Google Fonts
+- **Barcelona** - Urban planning model (Eixample)
+- **Balaji Srinivasan** - Network State concept
+- **Press Start 2P** - Google Fonts (pixel font)
+- **Nikhil** - Research paper author
 
 ## 📧 Links
 
 - **Live Demo:** https://brokenspagheti.github.io/wanda-network-state-city/
+- **Research Paper:** https://brokenspagheti.github.io/network-state-research/
 - **Repository:** https://github.com/brokenspagheti/wanda-network-state-city
 - **Issues:** Report bugs or request features
 
 ---
 
 **⛏️ Built block-by-block for the future of decentralized cities**
+
+*Combining Minecraft aesthetics with academic research on digital governance*
 
 *Not affiliated with Mojang Studios or Minecraft*
