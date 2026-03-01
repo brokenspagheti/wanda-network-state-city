@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting to Wanda...</title>
+    <script>
+        // This script will run on page load and add the missing buttons
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const layerToggle = document.getElementById('layer-toggle');
+                if (layerToggle) {
+                    const undergroundBtn = document.getElementById('btn-underground');
+                    
+                    // Create Utilities button
+                    const utilitiesBtn = document.createElement('button');
+                    utilitiesBtn.className = 'toggle-btn active';
+                    utilitiesBtn.id = 'btn-utilities';
+                    utilitiesBtn.textContent = '⚡ Utilities';
+                    
+                    // Create Social button
+                    const socialBtn = document.createElement('button');
+                    socialBtn.className = 'toggle-btn active';
+                    socialBtn.id = 'btn-social';
+                    socialBtn.textContent = '🏥 Social';
+                    
+                    // Insert before underground button
+                    if (undergroundBtn) {
+                        layerToggle.insertBefore(socialBtn, undergroundBtn);
+                        layerToggle.insertBefore(utilitiesBtn, socialBtn);
+                    }
+                }
+            }, 100);
+        });
+    </script>
+</head>
+<body>
+    <p>Loading Wanda with layer fixes...</p>
+    <script>
+        // Load the main page
+        window.location.href = 'index.html';
+    </script>
+</body>
+</html>
