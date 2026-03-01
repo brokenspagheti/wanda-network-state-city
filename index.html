@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanda - Network State City</title>
+    <title>Wanda - Network State City | Complete Urban System</title>
     <style>
         * {
             margin: 0;
@@ -23,13 +23,15 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(10, 14, 39, 0.9);
+            background: rgba(10, 14, 39, 0.95);
             color: #fff;
             padding: 20px;
             border-radius: 10px;
-            max-width: 300px;
+            max-width: 320px;
             border: 2px solid #00ffff;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         h1 {
             font-size: 24px;
@@ -42,67 +44,199 @@
             color: #88ccff;
             margin-bottom: 15px;
         }
-        .district {
-            margin: 10px 0;
-            padding: 8px;
+        .section {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+        .section-title {
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .item {
+            margin: 6px 0;
+            padding: 6px;
             background: rgba(0, 255, 255, 0.1);
             border-left: 3px solid #00ffff;
             border-radius: 3px;
+            font-size: 11px;
         }
-        .district-name {
+        .item-name {
             font-weight: bold;
             color: #00ffff;
         }
-        .district-desc {
-            font-size: 11px;
+        .item-desc {
+            font-size: 10px;
             color: #aaddff;
-            margin-top: 3px;
+            margin-top: 2px;
         }
         #controls {
             position: absolute;
             bottom: 20px;
             left: 20px;
-            background: rgba(10, 14, 39, 0.9);
+            background: rgba(10, 14, 39, 0.95);
             color: #fff;
             padding: 15px;
             border-radius: 10px;
             border: 2px solid #00ffff;
             font-size: 12px;
         }
+        #layer-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(10, 14, 39, 0.95);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #00ffff;
+        }
+        .toggle-btn {
+            display: block;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 11px;
+            transition: all 0.3s;
+        }
+        .toggle-btn:hover {
+            background: rgba(0, 255, 255, 0.4);
+        }
+        .toggle-btn.active {
+            background: rgba(0, 255, 255, 0.6);
+        }
     </style>
 </head>
 <body>
     <div id="canvas-container"></div>
+    
     <div id="info-panel">
         <h1>🌐 WANDA</h1>
-        <div class="subtitle">Network State City Plan</div>
-        <div class="district">
-            <div class="district-name">🏛️ Governance Hub</div>
-            <div class="district-desc">DAO operations & digital democracy</div>
+        <div class="subtitle">Network State City - Barcelona Grid System</div>
+        
+        <div class="section">
+            <div class="section-title">🏗️ ARCHITECTURE</div>
+            <div class="item">
+                <div class="item-name">Brutalist Sustainable Design</div>
+                <div class="item-desc">Concrete structures with green roofs & solar panels</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Superblocks (Eixample Grid)</div>
+                <div class="item-desc">Barcelona-inspired 9x9 block system</div>
+            </div>
         </div>
-        <div class="district">
-            <div class="district-name">💼 Innovation District</div>
-            <div class="district-desc">Startups & tech development</div>
+
+        <div class="section">
+            <div class="section-title">🚇 TRANSPORTATION</div>
+            <div class="item">
+                <div class="item-name">Metro Lines (4 lines)</div>
+                <div class="item-desc">Underground rapid transit network</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Tram System</div>
+                <div class="item-desc">Surface light rail on main avenues</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Bike Lanes</div>
+                <div class="item-desc">Protected cycling infrastructure</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Pedestrian Zones</div>
+                <div class="item-desc">Car-free superblock interiors</div>
+            </div>
         </div>
-        <div class="district">
-            <div class="district-name">🏘️ Residential Nodes</div>
-            <div class="district-desc">Decentralized living spaces</div>
+
+        <div class="section">
+            <div class="section-title">💧 WATER SYSTEM</div>
+            <div class="item">
+                <div class="item-name">Canal Network</div>
+                <div class="item-desc">Waterways through city districts</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Water Treatment Plants</div>
+                <div class="item-desc">Sustainable water recycling</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Rainwater Collection</div>
+                <div class="item-desc">Green infrastructure drainage</div>
+            </div>
         </div>
-        <div class="district">
-            <div class="district-name">🌳 Green Commons</div>
-            <div class="district-desc">Sustainable public spaces</div>
+
+        <div class="section">
+            <div class="section-title">🔧 UNDERGROUND</div>
+            <div class="item">
+                <div class="item-name">Utility Tunnels</div>
+                <div class="item-desc">Power, water, data infrastructure</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Parking Levels</div>
+                <div class="item-desc">Underground vehicle storage</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Service Corridors</div>
+                <div class="item-desc">Maintenance access network</div>
+            </div>
         </div>
-        <div class="district">
-            <div class="district-name">📡 Data Centers</div>
-            <div class="district-desc">Network infrastructure</div>
+
+        <div class="section">
+            <div class="section-title">🌳 GREEN SPACES</div>
+            <div class="item">
+                <div class="item-name">Central Park</div>
+                <div class="item-desc">Large urban green lung</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Pocket Parks</div>
+                <div class="item-desc">Small parks in each superblock</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Green Roofs</div>
+                <div class="item-desc">Vegetation on all buildings</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🏛️ DISTRICTS</div>
+            <div class="item">
+                <div class="item-name">Governance Quarter</div>
+                <div class="item-desc">DAO operations center</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Innovation Hub</div>
+                <div class="item-desc">Tech & startup zone</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Residential Superblocks</div>
+                <div class="item-desc">Mixed-use living areas</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Cultural District</div>
+                <div class="item-desc">Arts & community spaces</div>
+            </div>
         </div>
     </div>
+
+    <div id="layer-toggle">
+        <div style="font-weight: bold; margin-bottom: 10px; color: #00ffff;">VIEW LAYERS</div>
+        <button class="toggle-btn active" onclick="toggleLayer('surface')">🏙️ Surface</button>
+        <button class="toggle-btn active" onclick="toggleLayer('transport')">🚇 Transport</button>
+        <button class="toggle-btn active" onclick="toggleLayer('water')">💧 Water</button>
+        <button class="toggle-btn active" onclick="toggleLayer('underground')">🔧 Underground</button>
+    </div>
+
     <div id="controls">
         <strong>Controls:</strong><br>
         🖱️ Drag to rotate<br>
         🔍 Scroll to zoom<br>
-        ✨ Watch the network pulse
+        👆 Click layers to toggle views
     </div>
+
     <script type="importmap">
         {
             "imports": {
