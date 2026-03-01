@@ -1,255 +1,254 @@
-# 🌐 Wanda - Network State City
+# ⛏️ Wanda - Minecraft Network State City
 
-A comprehensive 3D visualization of **Wanda**, a futuristic network state city inspired by Barcelona's urban planning. Built with Three.js, featuring brutalist sustainable architecture, complete transportation networks, water systems, and underground infrastructure.
+A fully interactive **Minecraft-style** 3D visualization of Wanda, a network state city inspired by Barcelona's urban planning. Built with Three.js, featuring blocky voxel architecture, complete infrastructure systems, and integrated research paper display.
 
+![Minecraft](https://img.shields.io/badge/Style-Minecraft-green)
 ![Three.js](https://img.shields.io/badge/Three.js-0.160.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-live-success)
 
-## 🎯 Live Demo
+## 🎮 Live Demo
 
-**🌐 Visit:** https://brokenspagheti.github.io/wanda-network-state-city/
+**⛏️ Play Now:** https://brokenspagheti.github.io/wanda-network-state-city/
 
-## 🏗️ Architecture & Design
+## 🧱 Minecraft Architecture
 
-### Brutalist Sustainable Buildings
-- **Concrete structures** with exposed panels and raw materials
-- **Green roofs** on every building for urban cooling
-- **Solar panels** for renewable energy generation
-- **Small brutalist windows** characteristic of the architectural style
-- **Mixed-use buildings** combining residential, commercial, and office spaces
+### Block-by-Block Construction
+- **Stone Brick Buildings** - Authentic Minecraft block textures
+- **Grass Block Roofs** - Green sustainable tops on every building
+- **Glass Windows** - Transparent block windows
+- **Oak Wood Details** - Plank textures for accents
+- **Voxel-Perfect** - True blocky Minecraft aesthetic
 
-### Barcelona-Inspired Grid System
-- **Eixample superblock layout** - 9x9 grid of city blocks
-- **Chamfered corners** allowing better traffic flow and visibility
-- **Pocket parks** in the center of each superblock
-- **Wide avenues** separating superblocks
-- **Pedestrian-priority interiors** within each block
+### Procedural Textures
+- **Stone Bricks** - Randomized gray patterns
+- **Grass Blocks** - Green with dirt variations
+- **Dirt Paths** - Brown street textures
+- **Oak Planks** - Wood grain patterns
+- **Glass** - Semi-transparent blocks
 
-## 🚇 Transportation Infrastructure
+## 🏗️ City Layout
 
-### Metro System (Underground)
-- **4 metro lines** in different colors (Red, Blue, Green, Yellow)
-- **20+ metro stations** distributed across the city
-- **Underground tunnels** at -5m depth
-- **Station entrances** visible at surface level
-- **Interconnected network** covering all major districts
+### Barcelona Grid System
+- **9x9 Superblocks** - Eixample-inspired layout
+- **Dirt Path Streets** - Minecraft path blocks
+- **Grass Patches** - Parks in block centers
+- **200+ Buildings** - Randomly generated heights
+- **Blocky Clouds** - Floating white blocks in sky
 
-### Surface Transportation
-- **Tram lines** on main avenues with dedicated tracks
-- **Protected bike lanes** (green-marked) on major streets
-- **Pedestrian zones** in superblock interiors
-- **Street markings** and traffic infrastructure
-- **Car-free zones** promoting sustainable mobility
+## 🚇 Transportation (Minecart System)
 
-## 💧 Water Management System
+### Underground Rails
+- **4 Minecart Lines** - Red, Blue, Green, Yellow routes
+- **Iron Rails** - Authentic rail block textures
+- **Wooden Ties** - Oak plank rail supports
+- **Underground Tunnels** - At Y=-4 level
 
-### Canal Network
-- **Main canals** running through the city (horizontal & vertical)
-- **4m wide waterways** for drainage and aesthetics
-- **Interconnected system** linking all districts
+### Surface Transport
+- **Powered Rails** - Surface tram system
+- **Dirt Paths** - Walkable streets
+- **Rail Stations** - Access points throughout city
 
-### Water Infrastructure
-- **2 water treatment plants** (NW and SE corners)
-- **Pipe networks** connecting treatment facilities
-- **8 decorative fountains** in public spaces
-- **Rainwater collection** via green infrastructure
-- **Sustainable water recycling** systems
+## 💧 Water System
+
+### Water Blocks
+- **Flowing Canals** - Minecraft water blocks
+- **Horizontal Canal** - Main east-west waterway
+- **Vertical Canal** - North-south water channel
+- **Cauldrons** - Water collection points (10 locations)
+- **Transparent Water** - Classic Minecraft blue
 
 ## 🔧 Underground Infrastructure
 
-### Utility Systems
-- **Multi-level utility tunnels** at -8m depth
-- **Grid network** of service corridors
-- **Power, water, and data** distribution
-- **Maintenance access points** throughout the city
+### Redstone Network
+- **Redstone Circuits** - Glowing red power grid
+- **Power Distribution** - 10-block spacing grid
+- **Emissive Blocks** - Lit redstone texture
 
-### Parking & Storage
-- **3 underground parking levels** (-4m, -8m, -12m)
-- **Distributed parking zones** under each superblock
-- **Service corridors** for deliveries and maintenance
-- **Vehicle-free surface** promoting walkability
+### Cave Systems
+- **Stone Tunnels** - Utility corridors at Y=-8
+- **Grid Layout** - 20-block spacing
+- **Service Access** - Throughout underground
 
-## 🌳 Green Spaces & Sustainability
+## 🌳 Nature & Environment
 
-### Parks & Nature
-- **Central park** (20m radius) - city's green lung
-- **Pocket parks** in each superblock interior
-- **50+ trees** in central park
-- **Street trees** lining all major avenues
-- **Green roofs** on all buildings
+### Oak Trees (80+ Trees)
+- **4-Block Trunks** - Oak log blocks
+- **Leaf Canopy** - 5x5x3 leaf block clusters
+- **Random Gaps** - Natural-looking foliage
+- **Park Distribution** - Throughout city
 
-### Sustainable Features
-- **Solar panels** on every building
-- **Rainwater harvesting** systems
-- **Green infrastructure** for natural cooling
-- **Pedestrian-first design** reducing emissions
-- **Integrated nature** throughout urban fabric
+### Sky & Atmosphere
+- **Minecraft Sky Blue** (#87CEEB)
+- **Blocky Clouds** - White wool-style blocks
+- **Fog Effects** - Distance rendering
+- **Day Lighting** - Bright ambient + sun
 
-## 🏛️ City Districts
+## 📄 Research Paper Integration
 
-### Governance Quarter
-- **Central tower** (40m height) with antenna
-- **DAO operations center**
-- **Digital democracy hub**
-- **Public administration**
+### Upload Your Paper
+- **File Upload** - Support for PDF, TXT, MD formats
+- **Live Preview** - First 500 characters displayed
+- **Full View** - Opens in new window
+- **Network State Focus** - Integrated with city concept
 
-### Innovation Hub
-- **Tech campus buildings**
-- **Startup incubation spaces**
-- **Research facilities**
-- **Co-working zones**
+### How to Add Your Paper
+1. Click **"📤 UPLOAD PAPER"** button
+2. Select your research paper file
+3. Paper preview appears in panel
+4. Click **"Read Full Paper →"** to view complete document
 
-### Residential Superblocks
-- **Mixed-use buildings**
-- **Community spaces**
-- **Local services**
-- **Car-free interiors**
+## 🎮 Interactive Controls
 
-### Cultural District
-- **Arts venues**
-- **Community centers**
-- **Public spaces**
-- **Event facilities**
-
-## 🎮 Interactive Features
-
-### Layer Toggle System
-- **🏙️ Surface Layer** - Buildings, streets, parks
-- **🚇 Transport Layer** - Metro, trams, bike lanes
-- **💧 Water Layer** - Canals, treatment plants, fountains
-- **🔧 Underground Layer** - Utilities, parking, tunnels
+### Layer Toggle System (FIXED!)
+Click buttons to show/hide layers:
+- **🏙️ Surface** - Buildings, trees, clouds, streets
+- **🚇 Transport** - Minecart rails, powered rails
+- **💧 Water** - Canals, water blocks, cauldrons
+- **🔧 Underground** - Redstone, caves, tunnels
 
 ### Camera Controls
 - **🖱️ Drag** - Rotate camera around city
 - **🔍 Scroll** - Zoom in/out
-- **👆 Click layers** - Toggle infrastructure visibility
+- **Damping** - Smooth camera movement
 
-### Animations
-- **Pulsing fountains** - Dynamic water effects
-- **Building micro-movements** - Subtle life simulation
-- **Lighting effects** - Day/night atmosphere
+## 🎨 Minecraft Aesthetic
 
-## 🛠️ Technical Stack
+### Visual Style
+- **Pixelated Textures** - 16x16 block textures
+- **No Anti-aliasing** - Sharp blocky edges
+- **Nearest Filter** - Crisp pixel-perfect rendering
+- **Voxel Grid** - Everything aligned to 1-unit blocks
 
-- **Three.js 0.160.0** - 3D graphics engine
-- **OrbitControls** - Camera interaction
-- **ES6 Modules** - Modern JavaScript
-- **WebGL** - Hardware-accelerated rendering
-- **Responsive Design** - All screen sizes
+### Color Palette
+- **Stone Gray** - #7a7a7a (buildings)
+- **Grass Green** - #5a8c3a (roofs, parks)
+- **Dirt Brown** - #8b6914 (streets)
+- **Water Blue** - #3F76E4 (canals)
+- **Sky Blue** - #87CEEB (background)
+- **Redstone Red** - #FF0000 (power grid)
 
-## 📦 Installation & Setup
+### UI Design
+- **Press Start 2P Font** - Retro pixel font
+- **Wooden Panels** - Brown UI backgrounds
+- **Pixel Borders** - Blocky button styles
+- **Shadow Effects** - 8px offset shadows
 
-### Quick Start
+## 🛠️ Technical Implementation
+
+### Three.js Features
+- **BoxGeometry** - All blocks are cubes
+- **CanvasTexture** - Procedural texture generation
+- **NearestFilter** - Pixelated texture rendering
+- **Group Hierarchy** - Organized layer system
+- **Shadow Mapping** - Soft shadows enabled
+
+### Performance
+- **Efficient Rendering** - Grouped objects
+- **Layer Culling** - Toggle visibility
+- **Fog Distance** - Render optimization
+- **Shadow Maps** - 2048x2048 resolution
+
+## 📦 Installation
+
 ```bash
 # Clone repository
 git clone https://github.com/brokenspagheti/wanda-network-state-city.git
 cd wanda-network-state-city
 
-# Serve locally (choose one)
+# Serve locally
 python -m http.server 8000
 # or
 npx serve
-# or
-php -S localhost:8000
 
 # Open browser
 open http://localhost:8000
 ```
 
-### File Structure
-```
-wanda-network-state-city/
-├── index.html          # UI and layer controls
-├── script.js           # 3D city generation logic
-└── README.md          # Documentation
-```
+## 🎯 Network State Concept
 
-## 🎨 Design Philosophy
+### Digital Governance
+- **Decentralized Layout** - No single center
+- **Connected Districts** - Rail network integration
+- **Sustainable Design** - Green roofs, water management
+- **Community Blocks** - Superblock organization
 
-### Network State Principles
-1. **Decentralization** - Distributed governance and services
-2. **Sustainability** - Green infrastructure and renewable energy
-3. **Connectivity** - Integrated transport and digital networks
-4. **Community** - Human-scale superblocks
-5. **Innovation** - Tech-forward urban planning
+### Research Integration
+- Upload your network state research
+- Visual representation of concepts
+- Interactive exploration
+- Educational tool
 
-### Barcelona Influence
-- **Superblock system** - Eixample district inspiration
-- **Chamfered corners** - Improved visibility and flow
-- **Mixed-use density** - Vibrant urban life
-- **Public spaces** - Parks and plazas throughout
-- **Walkability** - Pedestrian-priority design
+## 🚀 Future Features
 
-### Brutalist Aesthetics
-- **Honest materials** - Exposed concrete
-- **Functional design** - Form follows function
-- **Geometric clarity** - Strong shapes and lines
-- **Sustainable integration** - Green roofs and solar
-- **Urban density** - Efficient land use
-
-## 🚀 Future Enhancements
-
-- [ ] Dynamic day/night cycle
-- [ ] Animated vehicles on streets
-- [ ] Weather effects (rain, fog)
-- [ ] Building interiors
-- [ ] Population simulation
-- [ ] Energy flow visualization
-- [ ] Real-time data integration
-- [ ] VR/AR support
+- [ ] Animated minecarts on rails
+- [ ] Day/night cycle
+- [ ] Villager NPCs
+- [ ] Mob spawning
+- [ ] Block breaking/placing
+- [ ] Inventory system
+- [ ] Multiplayer support
+- [ ] VR mode
 
 ## 🤝 Contributing
 
-Contributions welcome! Areas for improvement:
+Want to add features? Ideas:
+1. **More block types** - Add new Minecraft blocks
+2. **Biomes** - Different terrain types
+3. **Structures** - Villages, temples, etc.
+4. **Mobs** - Animated creatures
+5. **Sounds** - Minecraft audio effects
 
-1. **Performance optimization** - LOD systems
-2. **More infrastructure** - Waste, energy grids
-3. **Better textures** - PBR materials
-4. **Sound design** - Ambient city sounds
-5. **Mobile optimization** - Touch controls
-
-### How to Contribute
 ```bash
-# Fork and create branch
-git checkout -b feature/amazing-feature
-
-# Make changes and commit
-git commit -m 'Add amazing feature'
-
-# Push and create PR
-git push origin feature/amazing-feature
+git checkout -b feature/new-blocks
+git commit -m 'Add new block types'
+git push origin feature/new-blocks
 ```
 
 ## 📊 City Statistics
 
-- **Grid Size:** 9x9 superblocks
-- **Buildings:** 200+ brutalist structures
-- **Metro Stations:** 20 stations, 4 lines
-- **Parks:** 1 central + 40+ pocket parks
-- **Trees:** 100+ street and park trees
-- **Underground Levels:** 3 parking + utility tunnels
-- **Water Features:** 2 treatment plants, 8 fountains
-- **Total Area:** 200m x 200m
+- **Blocks Placed:** 10,000+ individual blocks
+- **Buildings:** 200+ stone brick structures
+- **Trees:** 80 oak trees (320+ blocks each)
+- **Rails:** 4 complete minecart lines
+- **Water Blocks:** 500+ flowing water
+- **Redstone:** 200+ powered blocks
+- **Clouds:** 20 cloud formations
+- **Total Area:** 200x200 blocks
+
+## 🎮 Minecraft Features
+
+### Authentic Elements
+- ✅ Block-by-block construction
+- ✅ Procedural textures
+- ✅ Minecart rails
+- ✅ Water physics (visual)
+- ✅ Redstone circuits
+- ✅ Oak trees
+- ✅ Grass blocks
+- ✅ Stone bricks
+- ✅ Glass windows
+- ✅ Cauldrons
 
 ## 📄 License
 
-MIT License - Free to use, modify, and distribute.
+MIT License - Build, modify, share freely!
 
-## 🙏 Acknowledgments
+## 🙏 Credits
 
-- **Three.js** - Amazing 3D library
-- **Barcelona** - Urban planning inspiration
-- **Brutalism** - Architectural style
+- **Minecraft** - Mojang Studios (inspiration)
+- **Three.js** - 3D graphics library
+- **Barcelona** - Urban planning model
 - **Network State** - Governance concept
-- **Bhindi AI** - Development assistance
+- **Press Start 2P** - Google Fonts
 
-## 📧 Contact & Links
+## 📧 Links
 
-- **Live Site:** https://brokenspagheti.github.io/wanda-network-state-city/
+- **Live Demo:** https://brokenspagheti.github.io/wanda-network-state-city/
 - **Repository:** https://github.com/brokenspagheti/wanda-network-state-city
-- **Issues:** https://github.com/brokenspagheti/wanda-network-state-city/issues
+- **Issues:** Report bugs or request features
 
 ---
 
-**Built with ❤️ for sustainable, connected, decentralized cities of the future**
+**⛏️ Built block-by-block for the future of decentralized cities**
+
+*Not affiliated with Mojang Studios or Minecraft*
