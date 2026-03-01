@@ -1,11 +1,14 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-let scene, camera, renderer, controls;
+let scene, camera, renderer, labelRenderer, controls;
 let layers = {
     surface: new THREE.Group(),
     transport: new THREE.Group(),
     water: new THREE.Group(),
+    utilities: new THREE.Group(),
+    social: new THREE.Group(),
     underground: new THREE.Group()
 };
 
@@ -25,6 +28,14 @@ function init() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    // CSS2D Label Renderer
+    labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0px';
+    labelRenderer.domElement.style.pointerEvents = 'none';
+    document.getElementById('canvas-container').appendChild(labelRenderer.domElement);
 
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -69,6 +80,26 @@ function init() {
 
     window.addEventListener('resize', onWindowResize, false);
     animate();
+}
+
+function createLabel(text, color = '#FFD700') {
+    const div = document.createElement('div');
+    div.className = 'label';
+    div.textContent = text;
+    div.style.color = color;
+    div.style.fontFamily = "'Press Start 2P', cursive";
+    div.style.fontSize = '10px';
+    div.style.padding = '4px 8px';
+    div.style.background = 'rgba(0, 0, 0, 0.8)';
+    div.style.border = '2px solid ' + color;
+    div.style.borderRadius = '4px';
+    div.style.textShadow = '1px 1px 2px black';
+    div.style.whiteSpace = 'nowrap';
+    div.style.pointerEvents = 'auto';
+    div.style.cursor = 'pointer';
+    
+    const label = new CSS2DObject(div);
+    return label;
 }
 
 function createMinecraftTextures() {
@@ -293,6 +324,8 @@ function createMinecraftCity() {
     const streetWidth = 3;
     const gridSize = 9;
 
+    let housingCount = 0;
+
     for (let i = -gridSize / 2; i < gridSize / 2; i++) {
         for (let j = -gridSize / 2; j < gridSize / 2; j++) {
             const x = i * (blockSize + streetWidth);
@@ -308,7 +341,15 @@ function createMinecraftCity() {
                 const height = 5 + Math.floor(Math.random() * 8);
                 const depth = 3 + Math.floor(Math.random() * 3);
                 
-                createMinecraftBuilding(bx, bz, width, height, depth);
+                const building = createMinecraftBuilding(bx, bz, width, height, depth);
+                
+                // Add housing label to some buildings
+                if (housingCount < 12 && Math.random() > 0.7) {
+                    const label = createLabel('🏠 Housing', '#90EE90');
+                    label.position.set(0, height + 2, 0);
+                    building.add(label);
+                    housingCount++;
+                }
             }
 
             // Grass patches in block centers (green spaces)
@@ -317,6 +358,14 @@ function createMinecraftCity() {
                     map: textures.grass
                 });
                 const patch = createMinecraftBlock(x, 0.5, z, 4, grassMat);
+                
+                // Add green space label
+                if (Math.random() > 0.8) {
+                    const label = createLabel('🌳 Park', '#228B22');
+                    label.position.set(0, 2, 0);
+                    patch.add(label);
+                }
+                
                 layers.surface.add(patch);
             }
         }
@@ -374,7 +423,7 @@ function createTransportation() {
         [{x: -80, z: 80}, {x: 80, z: -80}]
     ];
 
-    railRoutes.forEach(route => {
+    railRoutes.forEach((route, idx) => {
         const start = route[0];
         const end = route[1];
         const distance = Math.sqrt(
@@ -394,6 +443,16 @@ function createTransportation() {
             const tie = createMinecraftBlock(x, -4.3, z, 1, railMat);
             layers.transport.add(tie);
         }
+        
+        // Add metro line label at midpoint
+        if (idx === 0) {
+            const label = createLabel('🚇 Metro Line', '#C0C0C0');
+            label.position.set(0, -2, 0);
+            const labelAnchor = new THREE.Object3D();
+            labelAnchor.position.set(0, -4, 0);
+            labelAnchor.add(label);
+            layers.transport.add(labelAnchor);
+        }
     });
 
     // RAILWAYS: Powered rails on surface (tram/train)
@@ -403,20 +462,40 @@ function createTransportation() {
         layers.transport.add(rail1);
         layers.transport.add(rail2);
     }
+    
+    // Railway label
+    const railLabel = createLabel('🚊 Tram Line', '#FFD700');
+    railLabel.position.set(0, 2, 0);
+    const railAnchor = new THREE.Object3D();
+    railAnchor.position.set(0, 0.2, 20);
+    railAnchor.add(railLabel);
+    layers.transport.add(railAnchor);
 
     // TERMINALS: Transit stations
     const stationMat = new THREE.MeshStandardMaterial({ color: 0xFFD700 });
     const terminalLocations = [
-        {x: -60, z: 0}, {x: 60, z: 0},
-        {x: 0, z: -60}, {x: 0, z: 60}
+        {x: -60, z: 0, name: 'North Terminal'},
+        {x: 60, z: 0, name: 'South Terminal'},
+        {x: 0, z: -60, name: 'West Terminal'},
+        {x: 0, z: 60, name: 'East Terminal'}
     ];
     
     terminalLocations.forEach(loc => {
+        const group = new THREE.Group();
+        
         // Station building
         for (let h = 0; h < 3; h++) {
-            const station = createMinecraftBlock(loc.x, h + 0.5, loc.z, 4, stationMat);
-            layers.transport.add(station);
+            const station = createMinecraftBlock(0, h + 0.5, 0, 4, stationMat);
+            group.add(station);
         }
+        
+        // Add terminal label
+        const label = createLabel('🚉 ' + loc.name, '#FFD700');
+        label.position.set(0, 5, 0);
+        group.add(label);
+        
+        group.position.set(loc.x, 0, loc.z);
+        layers.transport.add(group);
     });
 }
 
@@ -435,6 +514,14 @@ function createWaterSystem() {
             layers.water.add(water);
         }
     }
+    
+    // Canal label
+    const canalLabel = createLabel('💧 Water Canal', '#3F76E4');
+    canalLabel.position.set(0, 2, 0);
+    const canalAnchor = new THREE.Object3D();
+    canalAnchor.position.set(0, -0.5, 30);
+    canalAnchor.add(canalLabel);
+    layers.water.add(canalAnchor);
 
     // WATERWAYS: Vertical canal
     for (let z = -80; z <= 80; z += 2) {
@@ -450,28 +537,48 @@ function createWaterSystem() {
         const x = (Math.random() - 0.5) * 140;
         const z = (Math.random() - 0.5) * 140;
         const cauldron = createMinecraftBlock(x, 0.5, z, 1, cauldronMat);
+        
+        if (i < 3) {
+            const label = createLabel('💦 Rainwater', '#87CEEB');
+            label.position.set(0, 2, 0);
+            cauldron.add(label);
+        }
+        
         layers.water.add(cauldron);
     }
 
     // TREATMENT: Water treatment plants
     const treatmentMat = new THREE.MeshStandardMaterial({ color: 0x4169E1 });
-    const treatmentLocations = [{x: -70, z: 30}, {x: 70, z: -30}];
+    const treatmentLocations = [
+        {x: -70, z: 30, name: 'Treatment Plant A'},
+        {x: 70, z: -30, name: 'Treatment Plant B'}
+    ];
     
     treatmentLocations.forEach(loc => {
+        const group = new THREE.Group();
+        
         for (let w = 0; w < 5; w++) {
             for (let d = 0; d < 5; d++) {
                 for (let h = 0; h < 4; h++) {
                     const block = createMinecraftBlock(
-                        loc.x + w - 2,
+                        w - 2,
                         h + 0.5,
-                        loc.z + d - 2,
+                        d - 2,
                         1,
                         treatmentMat
                     );
-                    layers.water.add(block);
+                    group.add(block);
                 }
             }
         }
+        
+        // Add treatment plant label
+        const label = createLabel('🏭 ' + loc.name, '#4169E1');
+        label.position.set(0, 6, 0);
+        group.add(label);
+        
+        group.position.set(loc.x, 0, loc.z);
+        layers.water.add(group);
     });
 
     // DRAINAGE: Underground drainage pipes
@@ -482,6 +589,14 @@ function createWaterSystem() {
             layers.water.add(drain);
         }
     }
+    
+    // Drainage label
+    const drainLabel = createLabel('🚰 Drainage Network', '#696969');
+    drainLabel.position.set(0, 2, 0);
+    const drainAnchor = new THREE.Object3D();
+    drainAnchor.position.set(0, -2, 0);
+    drainAnchor.add(drainLabel);
+    layers.water.add(drainAnchor);
 }
 
 function createUtilities() {
@@ -496,7 +611,7 @@ function createUtilities() {
     for (let x = -80; x <= 80; x += 20) {
         for (let z = -80; z <= 80; z += 20) {
             const powerNode = createMinecraftBlock(x, 15, z, 0.3, electricMat);
-            layers.underground.add(powerNode);
+            layers.utilities.add(powerNode);
         }
     }
 
@@ -506,27 +621,47 @@ function createUtilities() {
         for (let j = -80; j <= 80; j += 25) {
             for (let h = 0; h < 15; h++) {
                 const pole = createMinecraftBlock(i, h + 0.5, j, 0.4, poleMat);
-                layers.surface.add(pole);
+                layers.utilities.add(pole);
             }
         }
     }
+    
+    // Power grid label
+    const powerLabel = createLabel('⚡ Power Grid', '#FFFF00');
+    powerLabel.position.set(0, 18, 0);
+    const powerAnchor = new THREE.Object3D();
+    powerAnchor.position.set(0, 15, 0);
+    powerAnchor.add(powerLabel);
+    layers.utilities.add(powerAnchor);
 
     // TELECOM: Communication towers
     const telecomMat = new THREE.MeshStandardMaterial({ color: 0xFF6347 });
     const towerLocations = [
-        {x: -50, z: -50}, {x: 50, z: 50},
-        {x: -50, z: 50}, {x: 50, z: -50}
+        {x: -50, z: -50, name: 'Tower NW'},
+        {x: 50, z: 50, name: 'Tower SE'},
+        {x: -50, z: 50, name: 'Tower NE'},
+        {x: 50, z: -50, name: 'Tower SW'}
     ];
     
     towerLocations.forEach(loc => {
+        const group = new THREE.Group();
+        
         // Tall tower
         for (let h = 0; h < 25; h++) {
-            const tower = createMinecraftBlock(loc.x, h + 0.5, loc.z, 0.8, telecomMat);
-            layers.surface.add(tower);
+            const tower = createMinecraftBlock(0, h + 0.5, 0, 0.8, telecomMat);
+            group.add(tower);
         }
         // Antenna top
-        const antenna = createMinecraftBlock(loc.x, 26, loc.z, 1.5, telecomMat);
-        layers.surface.add(antenna);
+        const antenna = createMinecraftBlock(0, 26, 0, 1.5, telecomMat);
+        group.add(antenna);
+        
+        // Add telecom label
+        const label = createLabel('📡 ' + loc.name, '#FF6347');
+        label.position.set(0, 28, 0);
+        group.add(label);
+        
+        group.position.set(loc.x, 0, loc.z);
+        layers.utilities.add(group);
     });
 
     // GAS PIPELINES: Underground gas network
@@ -536,90 +671,133 @@ function createUtilities() {
     for (let x = -80; x <= 80; x += 12) {
         for (let z = -80; z <= 80; z += 12) {
             const pipe = createMinecraftBlock(x, -5, z, 0.4, gasMat);
-            layers.underground.add(pipe);
+            layers.utilities.add(pipe);
         }
     }
+    
+    // Gas pipeline label
+    const gasLabel = createLabel('🔥 Gas Pipeline', '#FFA500');
+    gasLabel.position.set(0, 2, 0);
+    const gasAnchor = new THREE.Object3D();
+    gasAnchor.position.set(0, -5, 0);
+    gasAnchor.add(gasLabel);
+    layers.utilities.add(gasAnchor);
 }
 
 function createSocialInfrastructure() {
     // HEALTH: Hospitals (red cross buildings)
     const hospitalMat = new THREE.MeshStandardMaterial({ color: 0xFF0000 });
-    const hospitalLocations = [{x: -40, z: -40}, {x: 40, z: 40}];
+    const hospitalLocations = [
+        {x: -40, z: -40, name: 'General Hospital'},
+        {x: 40, z: 40, name: 'City Hospital'}
+    ];
     
     hospitalLocations.forEach(loc => {
+        const group = new THREE.Group();
+        
         // Hospital building
         for (let w = 0; w < 8; w++) {
             for (let d = 0; d < 8; d++) {
                 for (let h = 0; h < 10; h++) {
                     if (w === 0 || w === 7 || d === 0 || d === 7 || h === 9) {
                         const block = createMinecraftBlock(
-                            loc.x + w - 4,
+                            w - 4,
                             h + 0.5,
-                            loc.z + d - 4,
+                            d - 4,
                             1,
                             hospitalMat
                         );
-                        layers.surface.add(block);
+                        group.add(block);
                     }
                 }
             }
         }
         // Red cross on top
-        const cross = createMinecraftBlock(loc.x, 11, loc.z, 3, hospitalMat);
-        layers.surface.add(cross);
+        const cross = createMinecraftBlock(0, 11, 0, 3, hospitalMat);
+        group.add(cross);
+        
+        // Add hospital label
+        const label = createLabel('🏥 ' + loc.name, '#FF0000');
+        label.position.set(0, 13, 0);
+        group.add(label);
+        
+        group.position.set(loc.x, 0, loc.z);
+        layers.social.add(group);
     });
 
     // EDUCATION: Schools (blue buildings)
     const schoolMat = new THREE.MeshStandardMaterial({ color: 0x4169E1 });
     const schoolLocations = [
-        {x: -50, z: 0}, {x: 50, z: 0},
-        {x: 0, z: -50}, {x: 0, z: 50}
+        {x: -50, z: 0, name: 'West School'},
+        {x: 50, z: 0, name: 'East School'},
+        {x: 0, z: -50, name: 'North School'},
+        {x: 0, z: 50, name: 'South School'}
     ];
     
     schoolLocations.forEach(loc => {
+        const group = new THREE.Group();
+        
         for (let w = 0; w < 6; w++) {
             for (let d = 0; d < 6; d++) {
                 for (let h = 0; h < 6; h++) {
                     if (w === 0 || w === 5 || d === 0 || d === 5 || h === 5) {
                         const block = createMinecraftBlock(
-                            loc.x + w - 3,
+                            w - 3,
                             h + 0.5,
-                            loc.z + d - 3,
+                            d - 3,
                             1,
                             schoolMat
                         );
-                        layers.surface.add(block);
+                        group.add(block);
                     }
                 }
             }
         }
+        
+        // Add school label
+        const label = createLabel('🎓 ' + loc.name, '#4169E1');
+        label.position.set(0, 8, 0);
+        group.add(label);
+        
+        group.position.set(loc.x, 0, loc.z);
+        layers.social.add(group);
     });
 
     // SECURITY: Police/Fire stations (dark blue)
     const securityMat = new THREE.MeshStandardMaterial({ color: 0x000080 });
-    const securityLocations = [{x: -30, z: 30}, {x: 30, z: -30}];
+    const securityLocations = [
+        {x: -30, z: 30, name: 'Police Station'},
+        {x: 30, z: -30, name: 'Fire Station'}
+    ];
     
     securityLocations.forEach(loc => {
+        const group = new THREE.Group();
+        
         for (let w = 0; w < 5; w++) {
             for (let d = 0; d < 5; d++) {
                 for (let h = 0; h < 5; h++) {
                     if (w === 0 || w === 4 || d === 0 || d === 4 || h === 4) {
                         const block = createMinecraftBlock(
-                            loc.x + w - 2,
+                            w - 2,
                             h + 0.5,
-                            loc.z + d - 2,
+                            d - 2,
                             1,
                             securityMat
                         );
-                        layers.surface.add(block);
+                        group.add(block);
                     }
                 }
             }
         }
+        
+        // Add security label
+        const label = createLabel('🚓 ' + loc.name, '#000080');
+        label.position.set(0, 7, 0);
+        group.add(label);
+        
+        group.position.set(loc.x, 0, loc.z);
+        layers.social.add(group);
     });
-
-    // HOUSING: Residential complexes (already created in createMinecraftCity)
-    // The random buildings serve as housing units
 }
 
 function createUnderground() {
@@ -637,6 +815,14 @@ function createUnderground() {
             layers.underground.add(redstone);
         }
     }
+    
+    // Redstone label
+    const redstoneLabel = createLabel('⚡ Redstone Grid', '#FF0000');
+    redstoneLabel.position.set(0, 2, 0);
+    const redstoneAnchor = new THREE.Object3D();
+    redstoneAnchor.position.set(0, -6, 0);
+    redstoneAnchor.add(redstoneLabel);
+    layers.underground.add(redstoneAnchor);
 
     // CAVE TUNNELS: Utility corridors (sanitation, cables)
     const stoneMat = new THREE.MeshStandardMaterial({ color: 0x808080 });
@@ -654,6 +840,14 @@ function createUnderground() {
             layers.underground.add(tunnel);
         }
     }
+    
+    // Tunnel label
+    const tunnelLabel = createLabel('🔧 Utility Tunnels', '#808080');
+    tunnelLabel.position.set(0, 2, 0);
+    const tunnelAnchor = new THREE.Object3D();
+    tunnelAnchor.position.set(0, -8, 0);
+    tunnelAnchor.add(tunnelLabel);
+    layers.underground.add(tunnelAnchor);
 }
 
 function createTrees() {
@@ -727,6 +921,8 @@ function setupLayerToggles() {
         'btn-surface': 'surface',
         'btn-transport': 'transport',
         'btn-water': 'water',
+        'btn-utilities': 'utilities',
+        'btn-social': 'social',
         'btn-underground': 'underground'
     };
 
@@ -734,13 +930,15 @@ function setupLayerToggles() {
         const btn = document.getElementById(btnId);
         const layerName = buttons[btnId];
         
-        btn.addEventListener('click', function() {
-            const layer = layers[layerName];
-            if (layer) {
-                layer.visible = !layer.visible;
-                this.classList.toggle('active');
-            }
-        });
+        if (btn) {
+            btn.addEventListener('click', function() {
+                const layer = layers[layerName];
+                if (layer) {
+                    layer.visible = !layer.visible;
+                    this.classList.toggle('active');
+                }
+            });
+        }
     });
 }
 
@@ -748,12 +946,14 @@ function animate() {
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
+    labelRenderer.render(scene, camera);
 }
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 init();
