@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanda - Minecraft Network State City</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Press Start 2P', cursive;
+            overflow-x: hidden;
+            background: #87CEEB;
+        }
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(139, 69, 19, 0.95);
+            color: #fff;
+            padding: 15px;
+            border: 4px solid #654321;
+            max-width: 340px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+            image-rendering: pixelated;
+            z-index: 10;
+        }
+        h1 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #FFD700;
+            text-shadow: 2px 2px 0px #000;
+        }
+        .subtitle {
+            font-size: 8px;
+            color: #90EE90;
+            margin-bottom: 15px;
+        }
+        .section {
+            margin: 12px 0;
+            padding: 8px;
+            background: rgba(101, 67, 33, 0.8);
+            border: 2px solid #8B4513;
+        }
+        .section-title {
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 6px;
+            font-size: 10px;
+        }
+        .item {
+            margin: 5px 0;
+            padding: 5px;
+            background: rgba(139, 69, 19, 0.6);
+            border-left: 3px solid #228B22;
+            font-size: 7px;
+            line-height: 1.4;
+        }
+        .item-name {
+            font-weight: bold;
+            color: #90EE90;
+        }
+        .item-desc {
+            font-size: 6px;
+            color: #DDD;
+            margin-top: 2px;
+        }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(139, 69, 19, 0.95);
+            color: #fff;
+            padding: 12px;
+            border: 4px solid #654321;
+            font-size: 8px;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        #layer-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(139, 69, 19, 0.95);
+            color: #fff;
+            padding: 12px;
+            border: 4px solid #654321;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .toggle-btn {
+            display: block;
+            margin: 6px 0;
+            padding: 8px 10px;
+            background: #8B4513;
+            border: 3px solid #654321;
+            color: #FFF;
+            cursor: pointer;
+            font-size: 8px;
+            font-family: 'Press Start 2P', cursive;
+            transition: all 0.1s;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+        }
+        .toggle-btn:hover {
+            background: #A0522D;
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+        }
+        .toggle-btn.active {
+            background: #228B22;
+            border-color: #006400;
+        }
+        #research-toggle {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(139, 69, 19, 0.95);
+            color: #fff;
+            padding: 12px;
+            border: 4px solid #654321;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .research-btn {
+            display: block;
+            padding: 10px 15px;
+            background: #228B22;
+            border: 3px solid #006400;
+            color: #FFF;
+            cursor: pointer;
+            font-size: 9px;
+            font-family: 'Press Start 2P', cursive;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .research-btn:hover {
+            background: #32CD32;
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+        }
+        #research-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        #research-modal.active {
+            display: block;
+        }
+        .modal-content {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #1a1a1a;
+            padding: 40px;
+            border: 4px solid #654321;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+            font-family: Georgia, serif;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        .modal-close {
+            position: sticky;
+            top: 10px;
+            float: right;
+            font-size: 30px;
+            cursor: pointer;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            background: #8B4513;
+            padding: 10px 20px;
+            border: 3px solid #654321;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+        }
+        .modal-close:hover {
+            background: #A0522D;
+        }
+        .modal-content h2 {
+            font-family: 'Press Start 2P', cursive;
+            color: #FFD700;
+            font-size: 20px;
+            margin: 30px 0 15px 0;
+            text-shadow: 2px 2px 0px #000;
+        }
+        .modal-content h3 {
+            font-family: 'Press Start 2P', cursive;
+            color: #90EE90;
+            font-size: 14px;
+            margin: 20px 0 10px 0;
+        }
+        .modal-content h4 {
+            font-family: 'Press Start 2P', cursive;
+            color: #87CEEB;
+            font-size: 11px;
+            margin: 15px 0 8px 0;
+        }
+        .modal-content p {
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .modal-content ul, .modal-content ol {
+            margin: 15px 0 15px 30px;
+        }
+        .modal-content li {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        .modal-content .author {
+            font-style: italic;
+            color: #90EE90;
+            font-size: 13px;
+        }
+        .modal-content .keywords {
+            background: rgba(139, 69, 19, 0.3);
+            padding: 10px;
+            border-left: 4px solid #FFD700;
+            margin: 15px 0;
+        }
+        .principle, .advantage, .challenge, .case-study {
+            background: rgba(139, 69, 19, 0.2);
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #228B22;
+        }
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #654321;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B4513;
+            border: 2px solid #654321;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="info-panel">
+        <h1>⛏️ WANDA</h1>
+        <div class="subtitle">Network State Infrastructure</div>
+        
+        <div class="section">
+            <div class="section-title">💧 WATER</div>
+            <div class="item">
+                <div class="item-name">Supply</div>
+                <div class="item-desc">Water distribution network</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Sanitation</div>
+                <div class="item-desc">Sewage treatment systems</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Drainage</div>
+                <div class="item-desc">Stormwater management</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Treatment</div>
+                <div class="item-desc">Water purification plants</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Harvesting</div>
+                <div class="item-desc">Rainwater collection</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🚇 TRANSPORT</div>
+            <div class="item">
+                <div class="item-name">Roads</div>
+                <div class="item-desc">Street network & highways</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Metro</div>
+                <div class="item-desc">Underground rail system</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Railways</div>
+                <div class="item-desc">Intercity train network</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Waterways</div>
+                <div class="item-desc">Canal transport routes</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Terminals</div>
+                <div class="item-desc">Transit hubs & stations</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🏙️ SURFACE</div>
+            <div class="item">
+                <div class="item-name">Zoning</div>
+                <div class="item-desc">Land use planning</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Green Spaces</div>
+                <div class="item-desc">Parks & recreation areas</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Waste Management</div>
+                <div class="item-desc">Collection & recycling</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">⚡ UTILITIES</div>
+            <div class="item">
+                <div class="item-name">Electricity</div>
+                <div class="item-desc">Power grid & distribution</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Telecom</div>
+                <div class="item-desc">Internet & communications</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Gas Pipelines</div>
+                <div class="item-desc">Natural gas network</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🏥 SOCIAL</div>
+            <div class="item">
+                <div class="item-name">Health</div>
+                <div class="item-desc">Hospitals & clinics</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Education</div>
+                <div class="item-desc">Schools & universities</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Security</div>
+                <div class="item-desc">Police & fire services</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Housing</div>
+                <div class="item-desc">Residential developments</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layer-toggle">
+        <div style="font-weight: bold; margin-bottom: 8px; color: #FFD700; font-size: 9px;">LAYERS</div>
+        <button class="toggle-btn active" id="btn-surface">🏙️ Surface</button>
+        <button class="toggle-btn active" id="btn-transport">🚇 Transport</button>
+        <button class="toggle-btn active" id="btn-water">💧 Water</button>
+        <button class="toggle-btn active" id="btn-utilities">⚡ Utilities</button>
+        <button class="toggle-btn active" id="btn-social">🏥 Social</button>
+        <button class="toggle-btn active" id="btn-underground">🔧 Underground</button>
+    </div>
+
+    <div id="controls">
+        <strong>CONTROLS:</strong><br>
+        🖱️ Drag = Rotate<br>
+        🔍 Scroll = Zoom<br>
+        👆 Click Layers
+    </div>
+
+    <div id="research-toggle">
+        <button class="research-btn" id="open-research">📄 READ<br>RESEARCH<br>PAPER</button>
+    </div>
+
+    <!-- Research Paper Modal (abbreviated for file size) -->
+    <div id="research-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="close-research">✕</span>
+            
+            <h1 style="text-align: center; font-size: 24px; margin-bottom: 10px;">The Network State</h1>
+            <p style="text-align: center; font-size: 16px; color: #90EE90; margin-bottom: 5px;">A New Model of Governance in the Digital Age</p>
+            <p class="author" style="text-align: center; margin-bottom: 30px;">by Nikhil | Department of Computer Science and Engineering</p>
+
+            <h2>Abstract</h2>
+            <p>The concept of the Network State, proposed by Balaji Srinivasan, represents a radical shift in how societies, governance, and nationhood can be organized in the digital era. This paper explores the philosophical foundations, technological enablers, and relevance of network states in addressing limitations of traditional governance structures.</p>
+            <p class="keywords"><strong>Keywords:</strong> Network State, Digital Governance, Blockchain, Decentralized Autonomous Organizations, Cryptographic Identity</p>
+
+            <h2>Full Research Paper</h2>
+            <p>For the complete research paper with all sections (Introduction, Literature Review, Methodology, Case Studies, and Conclusion), please visit the repository documentation or contact the author.</p>
+
+            <p style="text-align: center; margin-top: 40px; font-style: italic; color: #90EE90;">
+                © 2026 Nikhil | Department of Computer Science and Engineering
+            </p>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="script.js"></script>
+    <script>
+        // Research modal controls
+        const modal = document.getElementById('research-modal');
+        const openBtn = document.getElementById('open-research');
+        const closeBtn = document.getElementById('close-research');
+
+        openBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Close on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
